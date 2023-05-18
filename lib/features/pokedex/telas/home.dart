@@ -8,6 +8,15 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: listPokemon.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(listPokemon[index].name),
+          );
+        }
+        ,)
+    );
   }
 }
