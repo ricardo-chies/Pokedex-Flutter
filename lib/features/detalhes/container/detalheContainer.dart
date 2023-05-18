@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/common/failure/failure.dart';
 import 'package:pokedex/common/repositories/pokemonRepository.dart';
-import 'package:pokedex/features/detalhes/container/detalheContainer.dart';
+import 'package:pokedex/features/detalhes/telas/detalhes.dart';
 import 'package:pokedex/features/pokedex/telas/home.dart';
-
 import '../../../common/models/pokemon.dart';
-import '../telas/erro.dart';
-import '../telas/load.dart';
+import '../../pokedex/telas/erro.dart';
+import '../../pokedex/telas/load.dart';
 
-class PokemonContainer extends StatelessWidget {
-  const PokemonContainer(
-    {Key? key, required this.repository, required this.onItemTap }) : super(key: key);
+class DetailArguments {
+  final String name;
+
+  DetailArguments({required this.name});
+}
+
+class DetalheContainer extends StatelessWidget {
+  const DetalheContainer(
+    {Key? key, required this.repository, required this.arguments }) : super(key: key);
   final IPokemonRepository repository;
-  final Function(String, DetailArguments) onItemTap;
+  final DetailArguments arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class PokemonContainer extends StatelessWidget {
 
       if(snapshot.connectionState == ConnectionState.done && 
       snapshot.hasData) {
-        return Home(listPokemon: snapshot.data!, onItemTap: onItemTap,);
+        return Detalhes(name: arguments.name, list: snapshot.data!);
       }
 
       if(snapshot.hasError) {
