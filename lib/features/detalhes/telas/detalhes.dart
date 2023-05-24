@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/common/models/pokemon.dart';
 
 class Detalhes extends StatelessWidget {
-  const Detalhes({Key? key, required this.name, required this.list}) : super(key: key);
-  final String name;
+  const Detalhes({Key? key, required this.pokemon, required this.list}) : super(key: key);
+  final Pokemon pokemon;
   final List<Pokemon> list;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(pokemon.name),
       ),
       body: Padding(padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(

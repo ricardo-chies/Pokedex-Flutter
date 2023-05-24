@@ -8,9 +8,9 @@ import '../../pokedex/telas/erro.dart';
 import '../../pokedex/telas/load.dart';
 
 class DetailArguments {
-  final String name;
+  final Pokemon pokemon;
 
-  DetailArguments({required this.name});
+  DetailArguments({required this.pokemon});
 }
 
 class DetalheContainer extends StatelessWidget {
@@ -32,7 +32,7 @@ class DetalheContainer extends StatelessWidget {
 
       if(snapshot.connectionState == ConnectionState.done && 
       snapshot.hasData) {
-        return Detalhes(name: arguments.name, list: snapshot.data!);
+        return Detalhes(pokemon: arguments.pokemon, list: snapshot.data!);
       }
 
       if(snapshot.hasError) {
