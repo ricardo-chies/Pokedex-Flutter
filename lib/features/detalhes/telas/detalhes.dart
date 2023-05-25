@@ -4,11 +4,12 @@ import 'package:pokedex/features/detalhes/telas/widgets/detailAppBarWidget.dart'
 import 'package:pokedex/features/detalhes/telas/widgets/detailListWidget.dart';
 
 class Detalhes extends StatelessWidget {
-  const Detalhes({Key? key, required this.pokemon, required this.listPokemon, required this.onBack, required this.controller}) : super(key: key);
+  const Detalhes({Key? key, required this.pokemon, required this.listPokemon, required this.onBack, required this.controller, required this.onChangePokemon}) : super(key: key);
   final Pokemon pokemon;
   final List<Pokemon> listPokemon;
   final VoidCallback onBack;
   final PageController controller;
+  final ValueChanged<Pokemon> onChangePokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,8 @@ class Detalhes extends StatelessWidget {
           DetailListwidget(
             pokemon: pokemon,
             listPokemon: listPokemon, 
-            controller: controller,
+            controller: controller, 
+            onChangePokemon: onChangePokemon,
             )
         ],
       )

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/common/models/pokemon.dart';
 
 class DetailListwidget extends StatelessWidget {
-  const DetailListwidget({Key? key, required this.pokemon, required this.listPokemon, required this.controller}) : super(key: key);
+  const DetailListwidget({Key? key, required this.pokemon, required this.listPokemon, required this.controller, required this.onChangePokemon}) : super(key: key);
   final Pokemon pokemon;
   final List<Pokemon> listPokemon;
   final PageController controller;
+    final ValueChanged<Pokemon> onChangePokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,9 @@ class DetailListwidget extends StatelessWidget {
                 height: 150,
                 width: double.infinity,
                 child: PageView(
+                  onPageChanged: (index) {
+                    onChangePokemon(listPokemon[index]);
+                  },
                   controller: controller,
                   children: listPokemon.map((e) => Image.network(
                     e.image,

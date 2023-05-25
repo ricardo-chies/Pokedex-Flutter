@@ -8,10 +8,9 @@ import '../../pokedex/telas/erro.dart';
 import '../../pokedex/telas/load.dart';
 
 class DetailArguments {
+  DetailArguments({this.index = 0, required this.pokemon});
   final Pokemon pokemon;
   final int? index;
-
-  DetailArguments({this.index = 0, required this.pokemon});
 }
 
 class DetalheContainer extends StatefulWidget {
@@ -22,17 +21,21 @@ class DetalheContainer extends StatefulWidget {
   final VoidCallback onBack;
 
   @override
-  State<DetalheContainer> createState() => _DetalheContainerState();
+  _DetalheContainerState createState() => _DetalheContainerState();
 }
 
 class _DetalheContainerState extends State<DetalheContainer> {
-  late PageController controller;
+  late PageController _controller;
+  late Future<List<Pokemon>> _future;
+  Pokemon? _pokemon;
+
   @override
   void initState() {
-    controller = PageController(
+    _controller = PageController(
       viewportFraction: 0.5,
       initialPage: widget.arguments.index!
     );
+    _future = widget.repository.getAllPokemons();
     super.initState();
   }
 
@@ -40,7 +43,7 @@ class _DetalheContainerState extends State<DetalheContainer> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<Pokemon>>(
       
-      future: widget.repository.getAllPokemons(),
+      future: _future,
       builder: (context, snapshot) {
 
       if(snapshot.connectionState == ConnectionState.waiting) {
@@ -49,7 +52,21 @@ class _DetalheContainerState extends State<DetalheContainer> {
 
       if(snapshot.connectionState == ConnectionState.done && 
       snapshot.hasData) {
-        return Detalhes(pokemon: widget.arguments.pokemon, listPokemon: snapshot.data!, onBack: widget.onBack, controller: controller,);
+        if (_pokemon == null){
+          _pokemon = widget.arguments.pokemon;
+        }
+
+        return Detalhes(
+          pokemon: _pokemon!, 
+          listPokemon: snapshot.data!, 
+          onBack: widget.onBack, 
+          controller: _controller, 
+          onChangePokemon: (Pokemon value) { 
+            setState(() {
+              _pokemon = value;
+            });
+          },
+        );
       }
 
       if(snapshot.hasError) {
