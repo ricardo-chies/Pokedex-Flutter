@@ -51,12 +51,21 @@ class DetailListwidget extends StatelessWidget {
                     onChangePokemon(listPokemon[index]);
                   },
                   controller: controller,
-                  children: listPokemon.map((e) => Image.network(
-                    e.image,
-                    height: 100,
-                    width: 100,
-                    //fit: BoxFit.contain,
-                    ),
+                  children: listPokemon.map(
+                    (e) {  
+                      bool diff = e.name != pokemon.name;
+                      return AnimatedOpacity(
+                        duration: Duration(milliseconds: 400),
+                        opacity: diff ? 0.5 : 1.0,
+                        child: Image.network(
+                          e.image,
+                          height: 100,
+                          width: 100,
+                          //fit: BoxFit.contain,
+                          color: diff ? Colors.black.withOpacity(0.4) : null,
+                          ),
+                      );
+                    }
                   ).toList(),
                 ),
               ),
