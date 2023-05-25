@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/features/detalhes/container/detalheContainer.dart';
-import 'package:pokedex/features/pokedex/telas/widgets/pokemonItemWidget.dart';
+import 'package:pokedex/pokedex/detalhes/container/detalheContainer.dart';
+import 'package:pokedex/pokedex/home/telas/widgets/pokemonItemWidget.dart';
 
 import '../../../common/models/pokemon.dart';
 

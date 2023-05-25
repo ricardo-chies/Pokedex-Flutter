@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/common/models/pokemon.dart';
-import 'package:pokedex/features/detalhes/telas/widgets/detailAppBarWidget.dart';
-import 'package:pokedex/features/detalhes/telas/widgets/detailListWidget.dart';
+import 'package:pokedex/pokedex/detalhes/telas/widgets/detailAppBarWidget.dart';
+import 'package:pokedex/pokedex/detalhes/telas/widgets/detailListInformationWidget.dart';
+import 'package:pokedex/pokedex/detalhes/telas/widgets/detailListWidget.dart';
 
 class Detalhes extends StatelessWidget {
   const Detalhes({Key? key, required this.pokemon, required this.listPokemon, required this.onBack, required this.controller, required this.onChangePokemon}) : super(key: key);
@@ -25,6 +26,12 @@ class Detalhes extends StatelessWidget {
             listPokemon: listPokemon, 
             controller: controller, 
             onChangePokemon: onChangePokemon,
+            ),
+          DetailListInformationWidget(
+            pokemon: pokemon,
+            listPokemon: listPokemon, 
+            controller: controller, 
+            onChangePokemon: onChangePokemon
             )
         ],
       )

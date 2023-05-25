@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/common/failure/failure.dart';
+import 'package:pokedex/common/repositories/failure.dart';
 import 'package:pokedex/common/repositories/pokemonRepository.dart';
-import 'package:pokedex/features/detalhes/container/detalheContainer.dart';
-import 'package:pokedex/features/pokedex/telas/home.dart';
+import 'package:pokedex/pokedex/detalhes/container/detalheContainer.dart';
+import 'package:pokedex/pokedex/home/telas/home.dart';
 
 import '../../../common/models/pokemon.dart';
 import '../telas/erro.dart';

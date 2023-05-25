@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/common/failure/failure.dart';
+import 'package:pokedex/common/repositories/failure.dart';
 import 'package:pokedex/common/repositories/pokemonRepository.dart';
-import 'package:pokedex/features/detalhes/telas/detalhes.dart';
-import 'package:pokedex/features/pokedex/telas/home.dart';
+import 'package:pokedex/pokedex/detalhes/telas/detalhes.dart';
+import 'package:pokedex/pokedex/home/telas/home.dart';
 import '../../../common/models/pokemon.dart';
-import '../../pokedex/telas/erro.dart';
-import '../../pokedex/telas/load.dart';
+import '../../home/telas/erro.dart';
+import '../../home/telas/load.dart';
 
 class DetailArguments {
   DetailArguments({this.index = 0, required this.pokemon});
