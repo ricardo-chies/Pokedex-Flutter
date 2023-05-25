@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/common/models/pokemon.dart';
+import 'package:pokedex/features/detalhes/telas/widgets/detailAppBarWidget.dart';
+import 'package:pokedex/features/detalhes/telas/widgets/detailListWidget.dart';
 
 class Detalhes extends StatelessWidget {
-  const Detalhes({Key? key, required this.pokemon, required this.list}) : super(key: key);
+  const Detalhes({Key? key, required this.pokemon, required this.listPokemon, required this.onBack, required this.controller}) : super(key: key);
   final Pokemon pokemon;
-  final List<Pokemon> list;
+  final List<Pokemon> listPokemon;
+  final VoidCallback onBack;
+  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(pokemon.name),
-      ),
-      body: Padding(padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
+      body: Stack(
         children: [
-          SizedBox(
-            height: 400,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: ListView(
-                children: list.map((e) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(e.name),
-                )).toList(),
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-          )
+          DetailAppBarWidget(
+            pokemon: pokemon, 
+            onBack: onBack,
+          ),
+          DetailListwidget(
+            pokemon: pokemon,
+            listPokemon: listPokemon, 
+            controller: controller,
+            )
         ],
-        ),
-    ));
+      )
+    );
   }
 }

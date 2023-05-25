@@ -5,7 +5,7 @@ import 'package:pokedex/features/pokedex/container/pokemonContainer.dart';
 import 'package:pokedex/features/pokedex/telas/home.dart';
 
 class PokedexRoute extends StatelessWidget {
-  const PokedexRoute({ Key? key, required this.repository }) : super(key: key);
+  const PokedexRoute({ Key? key, required this.repository, }) : super(key: key);
   final PokemonRepository repository;
 
   @override
@@ -22,14 +22,16 @@ class PokedexRoute extends StatelessWidget {
         }
         
         if (settings.name == '/details') {
-          return MaterialPageRoute(builder: (context) {
-          return DetalheContainer(
-            repository: repository,
-             arguments: (settings.arguments as DetailArguments),);
-        },
-        );
+          return MaterialPageRoute(
+            builder: (context) {
+              return DetalheContainer(
+                repository: repository,
+                arguments: (settings.arguments as DetailArguments), 
+                onBack: () => Navigator.of(context).pop(),
+              );
+            },
+          );
         }
-
       },
     );
   }

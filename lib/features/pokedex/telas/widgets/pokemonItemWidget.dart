@@ -5,14 +5,15 @@ import 'package:pokedex/features/pokedex/telas/widgets/typeWidget.dart';
 
 
 class PokemonItemWidget extends StatelessWidget {
-  const PokemonItemWidget ({ Key? key, required this.pokemon, required this.onTap}) : super(key: key);
+  const PokemonItemWidget ({ Key? key, required this.pokemon, required this.onTap, required this.index}) : super(key: key);
   final Pokemon pokemon;
   final Function(String, DetailArguments) onTap;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap('/details', DetailArguments(pokemon: pokemon)),
+      onTap: () => onTap('/details', DetailArguments(pokemon: pokemon, index: index)),
       child: Container(
         decoration: BoxDecoration(
           color: pokemon.baseColor!.withOpacity(0.8),

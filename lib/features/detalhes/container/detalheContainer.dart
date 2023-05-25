@@ -9,21 +9,38 @@ import '../../pokedex/telas/load.dart';
 
 class DetailArguments {
   final Pokemon pokemon;
+  final int? index;
 
-  DetailArguments({required this.pokemon});
+  DetailArguments({this.index = 0, required this.pokemon});
 }
 
-class DetalheContainer extends StatelessWidget {
+class DetalheContainer extends StatefulWidget {
   const DetalheContainer(
-    {Key? key, required this.repository, required this.arguments }) : super(key: key);
+    {Key? key, required this.repository, required this.arguments, required this.onBack }) : super(key: key);
   final IPokemonRepository repository;
   final DetailArguments arguments;
+  final VoidCallback onBack;
+
+  @override
+  State<DetalheContainer> createState() => _DetalheContainerState();
+}
+
+class _DetalheContainerState extends State<DetalheContainer> {
+  late PageController controller;
+  @override
+  void initState() {
+    controller = PageController(
+      viewportFraction: 0.5,
+      initialPage: widget.arguments.index!
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Pokemon>>(
       
-      future: repository.getAllPokemons(),
+      future: widget.repository.getAllPokemons(),
       builder: (context, snapshot) {
 
       if(snapshot.connectionState == ConnectionState.waiting) {
@@ -32,7 +49,7 @@ class DetalheContainer extends StatelessWidget {
 
       if(snapshot.connectionState == ConnectionState.done && 
       snapshot.hasData) {
-        return Detalhes(pokemon: arguments.pokemon, list: snapshot.data!);
+        return Detalhes(pokemon: widget.arguments.pokemon, listPokemon: snapshot.data!, onBack: widget.onBack, controller: controller,);
       }
 
       if(snapshot.hasError) {

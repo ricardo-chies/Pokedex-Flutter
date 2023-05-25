@@ -45,7 +45,8 @@ class Home extends StatelessWidget {
           mainAxisSpacing: 12,
           children: listPokemon.map((e) => PokemonItemWidget(
             pokemon: e,
-            onTap: onItemTap
+            onTap: onItemTap,
+            index: listPokemon.indexOf(e)
             ,)
           )
           .toList(),       
