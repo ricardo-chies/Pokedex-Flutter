@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/common/models/pokemon.dart';
 
 class DetailListInformationWidget extends StatelessWidget {
-  const DetailListInformationWidget({Key? key, required this.pokemon, required this.listPokemon, required this.controller, required this.onChangePokemon}) : super(key: key);
+  const DetailListInformationWidget({
+    Key? key,
+    required this.pokemon,
+    required this.listPokemon,
+    required this.controller,
+    required this.onChangePokemon,
+  }) : super(key: key);
+
   final Pokemon pokemon;
   final List<Pokemon> listPokemon;
   final PageController controller;
-    final ValueChanged<Pokemon> onChangePokemon;
+  final ValueChanged<Pokemon> onChangePokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -26,42 +33,79 @@ class DetailListInformationWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Altura: ${pokemon.height}', 
-                      style: TextStyle(
+                  Text(
+                    'Altura: ${pokemon.height}',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      ),
                     ),
-                  Text('Peso: ${pokemon.weight}', 
-                      style: TextStyle(
+                  ),
+                  Text(
+                    'Peso: ${pokemon.weight}',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
+                    ),
+                  ),
+                  Visibility(
+                    visible: pokemon.egg != "Not in Eggs",
+                    child: Text(
+                      'Ovo: ${pokemon.egg}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                  Text('Ovo: ${pokemon.egg}', 
-                      style: TextStyle(
+                  ),
+                  Text(
+                    'Fraquezas: ${pokemon.weaknesses.join(", ")}',
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      ),
                     ),
-                  Text('Fraquezas: ${pokemon.weaknesses}', 
+                  ),
+                  Visibility(
+                    visible: getPrevEvolutionNames(pokemon) != "",
+                    child: Text(
+                      'Evolução Anterior: ${getPrevEvolutionNames(pokemon)}',
                       style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      //color: pokemon.egg != 'Not in Eggs' ? Colors.white : pokemon.baseColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
+                  ),
+                  Visibility(
+                    visible: getNextEvolutionNames(pokemon) != "",
+                    child: Text(
+                      'Próxima Evolução: ${getNextEvolutionNames(pokemon)}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-              
       ),
     );
+  }
+
+  String getNextEvolutionNames(Pokemon pokemon) {
+    final evolutionNames = pokemon.nextEvolution.map((evolution) => evolution.name).toList();
+    return evolutionNames.join(", ");
+  }
+
+  String getPrevEvolutionNames(Pokemon pokemon) {
+    final evolutionNames = pokemon.prevEvolution.map((evolution) => evolution.name).toList();
+    return evolutionNames.join(", ");
   }
 }

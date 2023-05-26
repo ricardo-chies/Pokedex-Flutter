@@ -16,11 +16,19 @@ class PokemonRepository implements IPokemonRepository{
   Future<List<Pokemon>> getAllPokemons() async {
     try {
       final response = await dio.get(Api.allPokemonsURL);
-      final json = jsonDecode(response.data) as Map<String, dynamic>;
-      final list = json['pokemon'] as List<dynamic>;
-      return list.map((e) => Pokemon.fromMap(e)).toList();
+      final jsonData = jsonDecode(response.data) as Map<String, dynamic>;
+      final List<Pokemon> pokemons = [];
 
+      final List<dynamic> pokemonList = jsonData['pokemon'] ?? [];
+
+      for (var item in pokemonList) {
+        final pokemon = Pokemon.fromMap(item);
+        pokemons.add(pokemon);
+      }
+
+      return pokemons;
     } catch (e) {
+      print(e);
       throw Failure(message: 'Não foi possível carregar os Pokémons');
     }
   }

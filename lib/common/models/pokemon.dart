@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Pokemon {
@@ -12,8 +10,8 @@ class Pokemon {
   final String weight;
   final String egg;
   final List<String> weaknesses;
-  //final List<String> prevEvolution;
-  //final List<String> nextEvolution;
+  final List<PokemonEvolution> prevEvolution;
+  final List<PokemonEvolution> nextEvolution;
 
   factory Pokemon.fromMap(Map<String, dynamic> json) {
     return Pokemon(
@@ -26,11 +24,22 @@ class Pokemon {
       weight: json['weight'],
       egg: json['egg'],
       weaknesses: (json['weaknesses'] as List<dynamic>).map((e) => e as String).toList(),
-      //weaknesses: json['weaknesses'].cast<String>(),
-      //prevEvolution: json['prev_evolution.name'],
-      //prevEvolution: (json['prev_evolution.name'] as List<dynamic>).map((e) => e as String).toList(),
-      //nextEvolution: (json['next_evolution'] as List<dynamic>).map((e) => e as String).toList(),
+      prevEvolution: _parseEvolutions(json['prev_evolution']),
+      nextEvolution: _parseEvolutions(json['next_evolution']),
     );
+  }
+
+  static List<PokemonEvolution> _parseEvolutions(List<dynamic>? evolutionList) {
+    if (evolutionList == null) {
+      return [];
+    }
+
+    return evolutionList
+        .map((evolution) => PokemonEvolution(
+              num: evolution['num'],
+              name: evolution['name'],
+            ))
+        .toList();
   }
 
   Color? get baseColor => _color(type: type[0]);
@@ -45,11 +54,11 @@ class Pokemon {
     required this.weight,
     required this.egg,
     required this.weaknesses,
-    //required this.prevEvolution,
-    //required this.nextEvolution
-    });
+    required this.prevEvolution,
+    required this.nextEvolution,
+  });
 
-      static Color? _color({required String type}) {
+  static Color? _color({required String type}) {
     switch (type) {
       case 'Normal':
         return Colors.brown[400];
@@ -91,4 +100,11 @@ class Pokemon {
         return Colors.grey;
       }
     }
+}
+
+class PokemonEvolution {
+  final String num;
+  final String name;
+
+  PokemonEvolution({required this.num, required this.name});
 }
