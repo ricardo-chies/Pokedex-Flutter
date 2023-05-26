@@ -34,7 +34,7 @@ class PokemonItemWidget extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white, 
                         fontWeight: FontWeight.bold,
-                        fontSize: 16
+                        fontSize: 14
                         ),
                     ),
                   ),
@@ -43,7 +43,7 @@ class PokemonItemWidget extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.white, 
                         fontWeight: FontWeight.bold,
-                        fontSize: 14
+                        fontSize: 10
                         ),
                     ),
                 ],

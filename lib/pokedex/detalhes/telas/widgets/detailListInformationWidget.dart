@@ -28,68 +28,161 @@ class DetailListInformationWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Altura: ${pokemon.height}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Altura: ',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                       Text(
+                        pokemon.height,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Peso: ${pokemon.weight}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Peso: ',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        pokemon.weight,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
+
                   Visibility(
                     visible: pokemon.egg != "Not in Eggs",
-                    child: Text(
-                      'Ovo: ${pokemon.egg}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Ovo: ',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          pokemon.egg,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Fraquezas: ',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+                      Flexible(
+                        child: Text(
+                          pokemon.weaknesses.join(", "),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Fraquezas: ${pokemon.weaknesses.join(", ")}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+
                   Visibility(
-                    visible: getPrevEvolutionNames(pokemon) != "",
-                    child: Text(
-                      'Evolução Anterior: ${getPrevEvolutionNames(pokemon)}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    visible: getPrevEvolutionName(pokemon) != "",
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Evolução Anterior: ',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          getPrevEvolutionName(pokemon),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  
                   Visibility(
-                    visible: getNextEvolutionNames(pokemon) != "",
-                    child: Text(
-                      'Próxima Evolução: ${getNextEvolutionNames(pokemon)}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    visible: getNextEvolutionName(pokemon) != "",
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Próxima Evolução: ',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          getNextEvolutionName(pokemon),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -99,13 +192,20 @@ class DetailListInformationWidget extends StatelessWidget {
     );
   }
 
-  String getNextEvolutionNames(Pokemon pokemon) {
-    final evolutionNames = pokemon.nextEvolution.map((evolution) => evolution.name).toList();
-    return evolutionNames.join(", ");
+  String getNextEvolutionName(Pokemon pokemon) {
+    if (pokemon.nextEvolution.isNotEmpty) {
+      return pokemon.nextEvolution[0].name;
+    } else {
+      return "";
+    }
   }
 
-  String getPrevEvolutionNames(Pokemon pokemon) {
-    final evolutionNames = pokemon.prevEvolution.map((evolution) => evolution.name).toList();
-    return evolutionNames.join(", ");
+  String getPrevEvolutionName(Pokemon pokemon) {
+    if (pokemon.prevEvolution.isNotEmpty) {
+      final lastIndex = pokemon.prevEvolution.length - 1;
+      return pokemon.prevEvolution[lastIndex].name;
+    } else {
+      return "";
+    }
   }
 }
