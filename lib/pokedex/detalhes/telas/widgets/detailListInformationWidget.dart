@@ -18,177 +18,71 @@ class DetailListInformationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 380,
+      top: 370,
       left: 0,
       right: 0,
       height: 400,
-      child: Container(
-        color: pokemon.baseColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Altura: ',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                       Text(
-                        pokemon.height,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Peso: ',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        pokemon.weight,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Visibility(
-                    visible: pokemon.egg != "Not in Eggs",
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Ovo: ',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          pokemon.egg,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Fraquezas: ',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          pokemon.weaknesses.join(", "),
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Visibility(
-                    visible: getPrevEvolutionName(pokemon) != "",
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Evolução Anterior: ',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          getPrevEvolutionName(pokemon),
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  
-                  Visibility(
-                    visible: getNextEvolutionName(pokemon) != "",
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Próxima Evolução: ',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          getNextEvolutionName(pokemon),
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
+      child: Stack(
+        children: [
+          Container(
+            color: pokemon.baseColor,
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: ListView(
+              children: [
+                _buildInfoRow('Altura:', pokemon.height),
+                _buildInfoRow('Peso:', pokemon.weight),
+                Visibility(
+                  visible: pokemon.egg != "Not in Eggs",
+                  child: _buildInfoRow('Ovo:', pokemon.egg),
+                ),
+                _buildInfoRow('Fraquezas:', pokemon.weaknesses.join(", ")),
+                Visibility(
+                  visible: getPrevEvolutionName(pokemon) != "",
+                  child: _buildInfoRow('Evolução Anterior:', getPrevEvolutionName(pokemon)),
+                ),
+                Visibility(
+                  visible: getNextEvolutionName(pokemon) != "",
+                  child: _buildInfoRow('Próxima Evolução:', getNextEvolutionName(pokemon)),
+                ),
+              ],
+            ),
+          ),
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.2,
+              child: Image.asset(
+                'images/pokeball.png',
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildInfoRow(String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 1),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 1),
+      ],
     );
   }
 
