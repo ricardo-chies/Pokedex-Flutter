@@ -21,7 +21,7 @@ class Detalhes extends StatelessWidget {
             pokemon: pokemon, 
             onBack: onBack,
           ),
-          DetailListwidget(
+          DetailListWidget(
             pokemon: pokemon,
             listPokemon: listPokemon, 
             controller: controller, 

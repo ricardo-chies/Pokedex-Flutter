@@ -12,10 +12,12 @@ class Pokemon {
   final Color baseColor;
   final String height;
   final String weight;
-  final String egg;
-  final List<String> weaknesses;
-  final List<PokemonEvolution> prevEvolution;
-  final List<PokemonEvolution> nextEvolution;
+  final int hp;
+  final int attack;
+  final int defense;
+  final int specialAttack;
+  final int specialDefense;
+  final int speed;
 
   Pokemon({
     required this.id,
@@ -26,35 +28,21 @@ class Pokemon {
     required this.baseColor,
     required this.height,
     required this.weight,
-    required this.egg,
-    required this.weaknesses,
-    required this.prevEvolution,
-    required this.nextEvolution,
+    required this.hp,
+    required this.attack,
+    required this.defense,
+    required this.specialAttack,
+    required this.specialDefense,
+    required this.speed,
   });
 
-factory Pokemon.fromMap(Map<String, dynamic> json) {
-  final List<String> types = (json['types'] as List<dynamic>)
-      .map((type) => type['type']['name'] as String)
-      .toList();
-  final Color baseColor = _getBaseColor(types);
+  factory Pokemon.fromMap(Map<String, dynamic> json) {
+    try{
+    final List<String> types = (json['types'] as List<dynamic>)
+        .map((type) => type['type']['name'] as String)
+        .toList();
 
-  final List<String> weaknesses = (json['types'] as List<dynamic>)
-      .map((type) => type['type']['name'] as String)
-      .toList();
-
-  final List<PokemonEvolution> prevEvolution = (json['prevEvolution'] as List<dynamic>?)
-      ?.map((evolution) => PokemonEvolution(
-            num: evolution['num'] ?? '',
-            name: evolution['name'] ?? '',
-          ))
-      .toList() ?? [];
-
-  final List<PokemonEvolution> nextEvolution = (json['nextEvolution'] as List<dynamic>?)
-      ?.map((evolution) => PokemonEvolution(
-            num: evolution['num'] ?? '',
-            name: evolution['name'] ?? '',
-          ))
-      .toList() ?? [];
+    final Color baseColor = PokemonUtils.getColorFromType(types);
 
     final int heightValue = json['height'];
     final String formattedHeight = PokemonUtils.transformHeight(heightValue);
@@ -62,69 +50,25 @@ factory Pokemon.fromMap(Map<String, dynamic> json) {
     final int weightValue = json['weight'];
     final String formattedWeight = PokemonUtils.transformWeight(weightValue);
 
-  return Pokemon(
-    id: json['id'],
-    num: json['id'].toString(),
-    name: json['name'],
-    image: json['sprites']['front_default'],
-    types: types,
-    baseColor: baseColor,
-    height: formattedHeight,
-    weight: formattedWeight,
-    egg: '',
-    weaknesses: weaknesses,
-    prevEvolution: prevEvolution,
-    nextEvolution: nextEvolution,
-  );
-}
-
-  static Color _getBaseColor(List<String> types) {
-    switch (types[0]) {
-      case 'Normal':
-        return Colors.brown[400]!;
-      case 'Fire':
-        return Colors.red;
-      case 'Water':
-        return Colors.blue;
-      case 'Grass':
-        return Colors.green;
-      case 'Electric':
-        return Colors.amber;
-      case 'Ice':
-        return Colors.cyanAccent[400]!;
-      case 'Fighting':
-        return Colors.orange;
-      case 'Poison':
-        return Colors.purple;
-      case 'Ground':
-        return Colors.orange[300]!;
-      case 'Flying':
-        return Colors.indigo[200]!;
-      case 'Psychic':
-        return Colors.pink;
-      case 'Bug':
-        return Colors.lightGreen[500]!;
-      case 'Rock':
-        return Colors.grey;
-      case 'Ghost':
-        return Colors.indigo[400]!;
-      case 'Dark':
-        return Colors.brown;
-      case 'Dragon':
-        return Colors.indigo[800]!;
-      case 'Steel':
-        return Colors.blueGrey;
-      case 'Fairy':
-        return Colors.pinkAccent[100]!;
-      default:
-        return Colors.grey;
+    return Pokemon(
+      id: json['id'],
+      num: json['id'].toString(),
+      name: json['name'],
+      //image: json['sprites']['front_default'],
+      image: json['sprites']['other']['dream_world']['front_default'],
+      types: types,
+      baseColor: baseColor,
+      height: formattedHeight,
+      weight: formattedWeight,
+      hp: json['stats'][0]['base_stat'],
+      attack: json['stats'][1]['base_stat'],
+      defense: json['stats'][2]['base_stat'],
+      specialAttack: json['stats'][3]['base_stat'],
+      specialDefense: json['stats'][4]['base_stat'],
+      speed: json['stats'][5]['base_stat'],
+    );
+    } catch (e) {
+      throw FormatException('Erro ao mapear dados do Pokemon: $e');
     }
   }
-}
-
-class PokemonEvolution {
-  final String num;
-  final String name;
-
-  PokemonEvolution({required this.num, required this.name});
 }

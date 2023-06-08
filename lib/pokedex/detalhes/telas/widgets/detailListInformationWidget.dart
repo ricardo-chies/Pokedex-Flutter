@@ -27,29 +27,24 @@ class DetailListInformationWidget extends StatelessWidget {
           Container(
             color: pokemon.baseColor,
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: ListView(
+            child: GridView.count(
+              crossAxisCount: 2, // Define o número de colunas
+              childAspectRatio: 2.5, // Define a proporção altura/largura dos itens
               children: [
+                _buildInfoRow('Hp:', pokemon.hp.toString()),
+                _buildInfoRow('Speed:', pokemon.speed.toString()),
+                _buildInfoRow('Attack:', pokemon.attack.toString()),
+                _buildInfoRow('Defense:', pokemon.defense.toString()),
+                _buildInfoRow('Special Attack:', pokemon.specialAttack.toString()),
+                _buildInfoRow('Special Defense:', pokemon.specialDefense.toString()),
                 _buildInfoRow('Altura:', pokemon.height),
                 _buildInfoRow('Peso:', pokemon.weight),
-                Visibility(
-                  visible: pokemon.egg != "Not in Eggs",
-                  child: _buildInfoRow('Ovo:', pokemon.egg),
-                ),
-                _buildInfoRow('Fraquezas:', pokemon.weaknesses.join(", ")),
-                Visibility(
-                  visible: getPrevEvolutionName(pokemon) != "",
-                  child: _buildInfoRow('Evolução Anterior:', getPrevEvolutionName(pokemon)),
-                ),
-                Visibility(
-                  visible: getNextEvolutionName(pokemon) != "",
-                  child: _buildInfoRow('Próxima Evolução:', getNextEvolutionName(pokemon)),
-                ),
               ],
             ),
           ),
           Positioned.fill(
             child: Opacity(
-              opacity: 0.2,
+              opacity: 0.4,
               child: Image.asset(
                 'images/pokeball.png',
               ),
@@ -63,43 +58,39 @@ class DetailListInformationWidget extends StatelessWidget {
   Widget _buildInfoRow(String title, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(1),
+          borderRadius: BorderRadius.circular(24),
+            // border: Border.all(
+            //   color: Colors.black,
+            //   width: 2.0
+          // )
+        ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: pokemon.baseColor.withOpacity(1),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 4),
         Text(
-          title,
+          value,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        SizedBox(height: 1),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.normal,
-            color: Colors.white,
-          ),
-        ),
-        SizedBox(height: 1),
       ],
     );
-  }
-
-  String getNextEvolutionName(Pokemon pokemon) {
-    if (pokemon.nextEvolution.isNotEmpty) {
-      return pokemon.nextEvolution[0].name;
-    } else {
-      return "";
-    }
-  }
-
-  String getPrevEvolutionName(Pokemon pokemon) {
-    if (pokemon.prevEvolution.isNotEmpty) {
-      final lastIndex = pokemon.prevEvolution.length - 1;
-      return pokemon.prevEvolution[lastIndex].name;
-    } else {
-      return "";
-    }
   }
 }
