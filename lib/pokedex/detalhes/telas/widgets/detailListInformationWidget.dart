@@ -55,7 +55,7 @@ class DetailListInformationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String title, String value) {
+  Widget _buildInfoRow(String title, String value) { // Método criado para melhor estrutura do código e evitar repetição
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,

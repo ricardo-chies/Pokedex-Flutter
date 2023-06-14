@@ -14,7 +14,7 @@ class DetailListWidget extends StatelessWidget {
   final Pokemon pokemon;
   final List<Pokemon> listPokemon;
   final PageController controller;
-  final ValueChanged<Pokemon> onChangePokemon;
+  final ValueChanged<Pokemon> onChangePokemon; // Usado para poder trocar pokemon arrastando quando houver uma lista de pokemons
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class DetailListWidget extends StatelessWidget {
               width: double.infinity,
               child: pokemon.isSinglePokemon 
                   ? AnimatedOpacity(
-                      duration: Duration(milliseconds: 400),
+                      duration: Duration(milliseconds: 400), // Se tiver apenas um pokemon renderiza desta forma
                       opacity: 1.0,
                       child: SvgPicture.network(
                         pokemon.image,
@@ -106,7 +106,7 @@ class DetailListWidget extends StatelessWidget {
                         (e) {
                           bool diff = e.name != pokemon.name;
                           return AnimatedOpacity(
-                            duration: Duration(milliseconds: 400),
+                            duration: Duration(milliseconds: 400), // Se houver uma lista de pokemons, renderiza desta forma
                             opacity: diff ? 0.5 : 1.0,
                             child: SvgPicture.network(
                               e.image,

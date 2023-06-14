@@ -14,6 +14,7 @@ class PokemonRepository implements IPokemonRepository {
 
   PokemonRepository({required this.dio});
 
+  // Busca todos os pokemons
   @override
   Future<List<Pokemon>> getAllPokemons() async {
     try {
@@ -22,11 +23,11 @@ class PokemonRepository implements IPokemonRepository {
 
       final List<dynamic> pokemonList = jsonData['results'] ?? [];
 
-      List<Pokemon> pokemons = await Future.wait(pokemonList.map((item) async {
-        final pokemonUrl = item['url'] as String;
-        final pokemonResponse = await dio.get(pokemonUrl);
+      List<Pokemon> pokemons = await Future.wait(pokemonList.map((item) async { // Irá repetir este método para cada pokémon na lista.
+        final pokemonUrl = item['url'] as String; // Pega a url daquele pokemon específico
+        final pokemonResponse = await dio.get(pokemonUrl); // Faz uma nova requisição na API, para obter os dados do pokemon específico.
         final pokemonData = pokemonResponse.data as Map<String, dynamic>;
-        final pokemon = Pokemon.fromMap(pokemonData);
+        final pokemon = Pokemon.fromMap(pokemonData); // Chama a classe pokemon para mapear os dados.
         return pokemon;
       }));
 
@@ -37,13 +38,14 @@ class PokemonRepository implements IPokemonRepository {
     }
   }
 
+  // Busca um pokemon pelo Id ou nome
   @override
   Future<Pokemon> getPokemonByNameOrNumber(String nameOrNumber) async {
     try {
       final response = await dio.get('${Api.pokeApiSearch}$nameOrNumber');
       final jsonData = response.data as Map<String, dynamic>;
 
-      final pokemon = Pokemon.fromMap(jsonData, isSinglePokemon: true);
+      final pokemon = Pokemon.fromMap(jsonData, isSinglePokemon: true); // Chama a classe pokemon para mapear os dados.
       return pokemon;
 
     } catch (e) {

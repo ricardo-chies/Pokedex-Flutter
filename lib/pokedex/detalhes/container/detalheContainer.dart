@@ -35,7 +35,7 @@ class _DetalheContainerState extends State<DetalheContainer> {
       viewportFraction: 0.5,
       initialPage: widget.arguments.index!
     );
-    _future = widget.repository.getAllPokemons(); // Atualize essa linha
+    _future = widget.repository.getAllPokemons();
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class _DetalheContainerState extends State<DetalheContainer> {
     return FutureBuilder<List<Pokemon>>(
       future: _future,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) { // Se a conexão está em andamento renderiza tela Load
           return Load();
         }
 
@@ -58,7 +58,7 @@ class _DetalheContainerState extends State<DetalheContainer> {
             listPokemon: snapshot.data!,
             onBack: widget.onBack,
             controller: _controller,
-            onChangePokemon: (Pokemon value) {
+            onChangePokemon: (Pokemon value) { // Passa os valores para a tela de detalhes
               setState(() {
                 _pokemon = value;
               });
@@ -67,7 +67,7 @@ class _DetalheContainerState extends State<DetalheContainer> {
         }
 
         if (snapshot.hasError) {
-          return Erro(error: (snapshot.error as Failure).message!);
+          return Erro(error: (snapshot.error as Failure).message!); // Se a conexão teve falha renderiza tela de Erro
         }
 
         return Container();

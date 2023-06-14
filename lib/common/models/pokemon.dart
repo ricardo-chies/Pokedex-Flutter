@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/pokemonUtils.dart';
 
+// Declaro uma classe com as informações que eu preciso de cada pokémon
 class Pokemon {
   final int id;
   final String num;
@@ -18,7 +19,7 @@ class Pokemon {
   final int specialAttack;
   final int specialDefense;
   final int speed;
-  final bool isSinglePokemon; // Novo atributo
+  final bool isSinglePokemon; 
 
   Pokemon({
     required this.id,
@@ -35,9 +36,10 @@ class Pokemon {
     required this.specialAttack,
     required this.specialDefense,
     required this.speed,
-    required this.isSinglePokemon, // Novo atributo
+    required this.isSinglePokemon,
   });
 
+  // Recebo os dados através do json e mapeio para cada objeto na lista de pokémons mostrando onde cada informação deve ficar.
   factory Pokemon.fromMap(Map<String, dynamic> json, {bool isSinglePokemon = false}) {
     try {
       final List<String> types = (json['types'] as List<dynamic>)
@@ -68,7 +70,7 @@ class Pokemon {
         specialAttack: json['stats'][3]['base_stat'],
         specialDefense: json['stats'][4]['base_stat'],
         speed: json['stats'][5]['base_stat'],
-        isSinglePokemon: isSinglePokemon, // Definir o valor do novo atributo
+        isSinglePokemon: isSinglePokemon,
       );
     } catch (e) {
       throw FormatException('Erro ao mapear dados do Pokemon: $e');

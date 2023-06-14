@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: PokedexRoute(repository: PokemonRepository(dio: Dio(),),)
+      home: PokedexRoute(repository: PokemonRepository(dio: Dio(),),) // Defino home como minha classe a ser renderixada primeiro
       
       //PokemonContainer(repository: PokemonRepository(dio: Dio()),
 

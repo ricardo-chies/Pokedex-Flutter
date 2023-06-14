@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class PokemonUtils {
-  static String transformWeight(int weight) {
+  static String transformWeight(int weight) { // Transforma o valor do peso de cada pokémon, voltando uma casa decimal
     double weightInKg = weight / 10;
     String weightString = weightInKg.toString();
     
@@ -19,14 +19,14 @@ class PokemonUtils {
     return '$weightString Kg';
   }
 
-  static String transformHeight(int height) {
+  static String transformHeight(int height) { // Transforma o valor altura de cada pokémon, voltando uma casa decimal
     double heightInMeters = height / 10;
     String heightString = heightInMeters.toStringAsFixed(2); // Limita para uma casa decimal
     
     return '$heightString m';
   }
 
-  static Color getColorFromType(List<String> types) {
+  static Color getColorFromType(List<String> types) { // Mapeia a cor de cada pokémon de acordo com seu tipo
     if (types.isEmpty) {
       return Colors.grey;
     }

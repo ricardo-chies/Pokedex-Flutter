@@ -11,12 +11,12 @@ class PokedexRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      initialRoute: '/',
+      initialRoute: '/', // Rota inicial
       onGenerateRoute: (settings) {
         if (settings.name == '/') {
           return MaterialPageRoute(builder: (context) {
-          return PokemonContainer(repository: repository, onItemTap: (route , arguments ) { 
-            Navigator.of(context).pushNamed(route, arguments: arguments);
+          return PokemonContainer(repository: repository, onItemTap: (route , arguments ) { // Passo os valores necessários para esta tela
+            Navigator.of(context).pushNamed(route, arguments: arguments); 
            },);
         });
         }
@@ -24,7 +24,7 @@ class PokedexRoute extends StatelessWidget {
         if (settings.name == '/details') {
           return MaterialPageRoute(
             builder: (context) {
-              return DetalheContainer(
+              return DetalheContainer( // Passo os valores necessários para esta tela
                 repository: repository,
                 arguments: (settings.arguments as DetailArguments), 
                 onBack: () => Navigator.of(context).pop(),

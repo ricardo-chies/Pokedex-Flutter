@@ -31,6 +31,7 @@ class _PokemonContainerState extends State<PokemonContainer> {
     _fetchPokemons();
   }
 
+  // Chamada para todos os pokemons
   void _fetchPokemons() {
     widget.repository.getAllPokemons().then((pokemons) {
       setState(() {
@@ -41,6 +42,7 @@ class _PokemonContainerState extends State<PokemonContainer> {
     });
   }
 
+  // Chamada um pokemon, passando o valor capturado na searchBox
   void _handleSearch(String searchText) {
     if (searchText.isNotEmpty) {
       widget.repository.getPokemonByNameOrNumber(searchText).then((pokemon) {
@@ -60,17 +62,17 @@ class _PokemonContainerState extends State<PokemonContainer> {
     return FutureBuilder<List<Pokemon>>(
       future: widget.repository.getAllPokemons(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) { // Se a conexão está em andamento renderiza tela Load
           return Load();
         }
 
         if (snapshot.hasError) {
-          return Erro(error: (snapshot.error as Failure).message!);
+          return Erro(error: (snapshot.error as Failure).message!); // Se a conexão deu erro renderiza tela Erro
         }
 
         return Home(
           pokemons: _pokemons,
-          onItemTap: widget.onItemTap,
+          onItemTap: widget.onItemTap, // Passa os valores para a tela Home
           onSearch: _handleSearch,
         );
       },

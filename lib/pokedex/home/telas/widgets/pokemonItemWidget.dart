@@ -21,7 +21,7 @@ class PokemonItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap('/details', DetailArguments(pokemon: pokemon, index: index)),
+      onTap: () => onTap('/details', DetailArguments(pokemon: pokemon, index: index)), // Ao clicar no card muda para a tela Details
       child: Container(
         decoration: BoxDecoration(
           color: pokemon.baseColor,
