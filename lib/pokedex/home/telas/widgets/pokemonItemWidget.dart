@@ -10,15 +10,16 @@ class PokemonItemWidget extends StatelessWidget {
     required this.pokemon,
     required this.onTap,
     required this.index,
+    required this.isSinglePokemon,
   }) : super(key: key);
 
   final Pokemon pokemon;
   final Function(String, DetailArguments) onTap;
   final int index;
+  final bool isSinglePokemon;
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () => onTap('/details', DetailArguments(pokemon: pokemon, index: index)),
       child: Container(
@@ -41,8 +42,7 @@ class PokemonItemWidget extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        
+                        fontSize: isSinglePokemon ? 25 : 16,
                       ),
                     ),
                   ),
@@ -51,7 +51,7 @@ class PokemonItemWidget extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 10,
+                      fontSize: isSinglePokemon ? 20 : 13,
                     ),
                   ),
                 ],
@@ -67,8 +67,8 @@ class PokemonItemWidget extends StatelessWidget {
                   Flexible(
                     child: SvgPicture.network(
                       pokemon.image,
-                      width: 75,
-                      height: 75,
+                      width: isSinglePokemon ? 110 : 75,
+                      height: isSinglePokemon ? 102 : 75,
                       fit: BoxFit.scaleDown,
                     ),
                   ),

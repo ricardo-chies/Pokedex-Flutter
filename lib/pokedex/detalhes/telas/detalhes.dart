@@ -5,7 +5,15 @@ import 'package:pokedex/pokedex/detalhes/telas/widgets/detailListInformationWidg
 import 'package:pokedex/pokedex/detalhes/telas/widgets/detailListWidget.dart';
 
 class Detalhes extends StatelessWidget {
-  const Detalhes({Key? key, required this.pokemon, required this.listPokemon, required this.onBack, required this.controller, required this.onChangePokemon}) : super(key: key);
+  const Detalhes({
+    Key? key,
+    required this.pokemon,
+    required this.listPokemon,
+    required this.onBack,
+    required this.controller,
+    required this.onChangePokemon,
+  }) : super(key: key);
+
   final Pokemon pokemon;
   final List<Pokemon> listPokemon;
   final VoidCallback onBack;
@@ -14,27 +22,28 @@ class Detalhes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
           DetailAppBarWidget(
-            pokemon: pokemon, 
+            pokemon: pokemon,
             onBack: onBack,
           ),
           DetailListWidget(
             pokemon: pokemon,
-            listPokemon: listPokemon, 
-            controller: controller, 
+            listPokemon: listPokemon,
+            controller: controller,
             onChangePokemon: onChangePokemon,
-            ),
+          ),
           DetailListInformationWidget(
             pokemon: pokemon,
-            listPokemon: listPokemon, 
-            controller: controller, 
-            onChangePokemon: onChangePokemon
-            )
+            listPokemon: listPokemon,
+            controller: controller,
+            onChangePokemon: onChangePokemon,
+          ),
         ],
-      )
+      ),
     );
   }
 }

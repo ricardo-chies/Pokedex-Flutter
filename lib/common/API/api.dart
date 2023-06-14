@@ -5,7 +5,7 @@ class Api {
   static const pokeApi = 
     'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151';
 
-  static const pokeApiColor = 
-    'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=151';
+  static const pokeApiSearch = 
+    'https://pokeapi.co/api/v2/pokemon/';
 }
 

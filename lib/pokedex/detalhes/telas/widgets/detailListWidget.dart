@@ -85,28 +85,40 @@ class DetailListWidget extends StatelessWidget {
             SizedBox(
               height: 150,
               width: double.infinity,
-              child: PageView(
-                onPageChanged: (index) {
-                  onChangePokemon(listPokemon[index]);
-                },
-                controller: controller,
-                children: listPokemon.map(
-                  (e) {
-                    bool diff = e.name != pokemon.name;
-                    return AnimatedOpacity(
+              child: pokemon.isSinglePokemon 
+                  ? AnimatedOpacity(
                       duration: Duration(milliseconds: 400),
-                      opacity: diff ? 0.5 : 1.0,
+                      opacity: 1.0,
                       child: SvgPicture.network(
-                        e.image,
+                        pokemon.image,
                         height: 100,
                         width: 100,
                         fit: BoxFit.contain,
-                        color: diff ? Colors.black.withOpacity(0.4) : null,
+                        color: null,
                       ),
-                    );
-                  },
-                ).toList(),
-              ),
+                    )
+                  : PageView(
+                      onPageChanged: (index) {
+                        onChangePokemon(listPokemon[index]);
+                      },
+                      controller: controller,
+                      children: listPokemon.map(
+                        (e) {
+                          bool diff = e.name != pokemon.name;
+                          return AnimatedOpacity(
+                            duration: Duration(milliseconds: 400),
+                            opacity: diff ? 0.5 : 1.0,
+                            child: SvgPicture.network(
+                              e.image,
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.contain,
+                              color: diff ? Colors.black.withOpacity(0.4) : null,
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
             ),
           ],
         ),

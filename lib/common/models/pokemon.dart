@@ -18,6 +18,7 @@ class Pokemon {
   final int specialAttack;
   final int specialDefense;
   final int speed;
+  final bool isSinglePokemon; // Novo atributo
 
   Pokemon({
     required this.id,
@@ -34,39 +35,41 @@ class Pokemon {
     required this.specialAttack,
     required this.specialDefense,
     required this.speed,
+    required this.isSinglePokemon, // Novo atributo
   });
 
-  factory Pokemon.fromMap(Map<String, dynamic> json) {
-    try{
-    final List<String> types = (json['types'] as List<dynamic>)
-        .map((type) => type['type']['name'] as String)
-        .toList();
+  factory Pokemon.fromMap(Map<String, dynamic> json, {bool isSinglePokemon = false}) {
+    try {
+      final List<String> types = (json['types'] as List<dynamic>)
+          .map((type) => type['type']['name'] as String)
+          .toList();
 
-    final Color baseColor = PokemonUtils.getColorFromType(types);
+      final Color baseColor = PokemonUtils.getColorFromType(types);
 
-    final int heightValue = json['height'];
-    final String formattedHeight = PokemonUtils.transformHeight(heightValue);
+      final int heightValue = json['height'];
+      final String formattedHeight = PokemonUtils.transformHeight(heightValue);
 
-    final int weightValue = json['weight'];
-    final String formattedWeight = PokemonUtils.transformWeight(weightValue);
+      final int weightValue = json['weight'];
+      final String formattedWeight = PokemonUtils.transformWeight(weightValue);
 
-    return Pokemon(
-      id: json['id'],
-      num: json['id'].toString(),
-      name: json['name'],
-      //image: json['sprites']['front_default'],
-      image: json['sprites']['other']['dream_world']['front_default'],
-      types: types,
-      baseColor: baseColor,
-      height: formattedHeight,
-      weight: formattedWeight,
-      hp: json['stats'][0]['base_stat'],
-      attack: json['stats'][1]['base_stat'],
-      defense: json['stats'][2]['base_stat'],
-      specialAttack: json['stats'][3]['base_stat'],
-      specialDefense: json['stats'][4]['base_stat'],
-      speed: json['stats'][5]['base_stat'],
-    );
+      return Pokemon(
+        id: json['id'],
+        num: json['id'].toString(),
+        name: json['name'],
+        //image: json['sprites']['front_default'],
+        image: json['sprites']['other']['dream_world']['front_default'],
+        types: types,
+        baseColor: baseColor,
+        height: formattedHeight,
+        weight: formattedWeight,
+        hp: json['stats'][0]['base_stat'],
+        attack: json['stats'][1]['base_stat'],
+        defense: json['stats'][2]['base_stat'],
+        specialAttack: json['stats'][3]['base_stat'],
+        specialDefense: json['stats'][4]['base_stat'],
+        speed: json['stats'][5]['base_stat'],
+        isSinglePokemon: isSinglePokemon, // Definir o valor do novo atributo
+      );
     } catch (e) {
       throw FormatException('Erro ao mapear dados do Pokemon: $e');
     }

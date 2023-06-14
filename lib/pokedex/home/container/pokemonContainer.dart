@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/common/repositories/failure.dart';
 import 'package:pokedex/common/repositories/pokemonRepository.dart';
 import 'package:pokedex/pokedex/detalhes/container/detalheContainer.dart';
+import 'package:pokedex/pokedex/home/telas/erro.dart';
+import 'package:pokedex/pokedex/home/telas/load.dart';
 import 'package:pokedex/pokedex/home/telas/home.dart';
 
 import '../../../common/models/pokemon.dart';
-import '../telas/erro.dart';
-import '../telas/load.dart';
 
-class PokemonContainer extends StatelessWidget {
+class PokemonContainer extends StatefulWidget {
   const PokemonContainer({
     Key? key,
     required this.repository,
@@ -19,23 +19,60 @@ class PokemonContainer extends StatelessWidget {
   final Function(String, DetailArguments) onItemTap;
 
   @override
+  _PokemonContainerState createState() => _PokemonContainerState();
+}
+
+class _PokemonContainerState extends State<PokemonContainer> {
+  List<Pokemon> _pokemons = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPokemons();
+  }
+
+  void _fetchPokemons() {
+    widget.repository.getAllPokemons().then((pokemons) {
+      setState(() {
+        _pokemons = pokemons;
+      });
+    }).catchError((error) {
+      print('Erro: $error');
+    });
+  }
+
+  void _handleSearch(String searchText) {
+    if (searchText.isNotEmpty) {
+      widget.repository.getPokemonByNameOrNumber(searchText).then((pokemon) {
+        setState(() {
+          _pokemons = [pokemon];
+        });
+      }).catchError((error) {
+        print('Erro: $error');
+      });
+    } else {
+      _fetchPokemons();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Pokemon>>(
-      future: repository.getAllPokemons(),
+      future: widget.repository.getAllPokemons(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Load();
-        }
-
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-          return Home(listPokemon: snapshot.data!, onItemTap: onItemTap);
         }
 
         if (snapshot.hasError) {
           return Erro(error: (snapshot.error as Failure).message!);
         }
 
-        return Container();
+        return Home(
+          pokemons: _pokemons,
+          onItemTap: widget.onItemTap,
+          onSearch: _handleSearch,
+        );
       },
     );
   }
