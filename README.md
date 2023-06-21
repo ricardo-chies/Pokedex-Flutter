@@ -47,9 +47,9 @@ E apresentamos estes dados na tela.
 # Layout do Projeto
 
 <p align="center">
-  <img width="900" height="700" src="images/to_readme/home.png">
-  <img width="900" height="700" src="images/to_readme/search.png">
-  <img width="900" height="700" src="images/to_readme/details.png">
+  <img width="300" height="650" src="images/to_readme/home.png">
+  <img width="300" height="650" src="images/to_readme/search.png">
+  <img width="300" height="650" src="images/to_readme/details.png">
 </p>
 
 # Tecnologias Utilizadas
